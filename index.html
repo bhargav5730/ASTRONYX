@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Animated Intro with Sign-In</title>
+<style>
+  body {
+    margin: 0;
+    background-color: #000;
+    overflow: hidden;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+
+  #container {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+  }
+
+  /* Video styling */
+  #introVideo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* SVG "ASTRONYX" styling */
+  #nameSVGContainer {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: opacity 1s ease;
+    width: 50%;
+    max-width: 400px;
+    z-index: 2;
+  }
+
+  /* Sign-in card styling (hidden initially) */
+  #signInSection {
+    display: none;
+    position: absolute;
+    top: 0; left: 0; right:0; bottom:0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: transparent;
+    padding: 20px;
+    z-index: 3;
+  }
+
+  /* Sign-in card styles */
+  .signInCard {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    max-width: 400px;
+    width: 100%;
+    padding: 40px 30px;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+
+  .signInCard h2 {
+    margin: 0 0 10px 0;
+    font-size: 24px;
+    font-weight: 600;
+  }
+
+  .description {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 20px;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+
+  input[type="text"],
+  input[type="password"] {
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+
+  input[type="text"]:focus,
+  input[type="password"]:focus {
+    outline: none;
+    border-color: #0078d4;
+    box-shadow: 0 0 0 2px rgba(0,120,212,0.2);
+  }
+
+  .checkbox-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  .checkbox-group input[type="checkbox"] {
+    margin-right: 8px;
+  }
+
+  button[type="submit"] {
+    padding: 14px;
+    background-color: #0078d4;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.2s;
+  }
+
+  button[type="submit"]:hover {
+    background-color: #005a9e;
+    transform: scale(1.02);
+  }
+
+  .links {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+    font-size: 13px;
+  }
+
+  .links a {
+    color: #0078d4;
+    text-decoration: none;
+  }
+
+  .divider {
+    display: flex;
+    align-items: center;
+    margin: 20px 0;
+    font-size: 13px;
+    color: #999;
+  }
+
+  .divider span {
+    padding: 0 10px;
+    background: #fff;
+  }
+
+  .divider::before,
+  .divider::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background-color: #ccc;
+  }
+
+  .alt-signin button {
+    padding: 12px;
+    margin-bottom: 10px;
+    width: 100%;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.2s;
+  }
+
+  .alt-signin button:nth-child(1) {
+    background-color: #4285F4;
+    color: #fff;
+  }
+
+  .alt-signin button:nth-child(2) {
+    background-color: #2F2F2F;
+    color: #fff;
+  }
+
+  .alt-signin button:hover {
+    opacity: 0.9;
+    transform: scale(1.02);
+  }
+
+  /* Responsive adjustments */
+  @media(max-width: 500px) {
+    .signInCard {
+      width: 90%;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div id="container">
+  <!-- Video Background -->
+  <video id="introVideo" autoplay muted playsinline>
+    <source src="https://files.catbox.moe/q9zbm0.mp4" type="video/mp4" />
+    Your browser does not support the video tag.
+  </video>
+
+  <!-- SVG "ASTRONYX" appears after 2s -->
+  <div id="nameSVGContainer">
+    <svg id="nameSVG" viewBox="-4.087 -2 343.221 88.229" xmlns="http://www.w3.org/2000/svg" style="width:100%; height:auto; opacity:0; transition:opacity 1s;">
+      <g fill="#ffffff" stroke="#ffffff" stroke-width="0.5" stroke-linecap="round" fill-rule="nonzero">
+        <path d="M-2.087 80.566L14.575 18.311L51.196 18.311L38.452 65.918L23.804 65.918L28.711 47.607L21.387 47.607L16.479 65.918L-2.087 80.566ZM33.618 29.297L26.294 29.297L24.316 36.621L31.641 36.621L33.618 29.297ZM72.913 32.959L73.901 29.297L66.577 29.297L64.600 36.621L86.572 36.621L78.735 65.918L42.114 65.918L46.033 51.270L60.681 51.270L59.692 54.932L67.017 54.932L68.994 47.607L47.021 47.607L54.858 18.311L91.479 18.311L87.561 32.959L72.913 32.959ZM128.833 29.297L117.847 29.297L108.032 65.918L89.465 80.566L103.198 29.297L92.212 29.297L95.142 18.311L131.763 18.311L128.833 29.297ZM154.468 29.297L147.144 29.297L145.166 36.621L152.490 36.621L154.468 29.297ZM144.653 65.918L149.561 47.607L142.236 47.607L137.329 65.918L118.762 80.566L135.425 18.311L172.046 18.311L167.139 36.621L160.181 42.114L164.209 47.607L159.302 65.918L144.653 65.918ZM187.427 29.297L180.542 54.932L187.866 54.932L194.751 29.297L187.427 29.297ZM199.585 65.918L162.964 65.918L175.708 18.311L212.329 18.311L199.585 65.918ZM231.116 43.945L225.732 36.621L217.896 65.918L203.247 65.918L215.991 18.311L230.640 18.311L236.023 25.635L237.964 18.311L252.612 18.311L239.868 65.918L225.220 65.918L231.116 43.945ZM250.598 80.566L259.424 47.607L248.438 47.607L256.274 18.311L270.923 18.311L266.016 36.621L273.340 36.621L278.247 18.311L292.896 18.311L285.059 47.607L274.072 47.607L269.165 65.918L250.598 80.566ZM310.693 47.607L303.369 47.607L298.462 65.918L279.895 80.566L288.721 47.607L295.679 42.114L291.650 36.621L296.558 18.311L311.206 18.311L306.299 36.621L313.623 36.621L318.530 18.311L337.134 3.662L328.271 36.621L321.313 42.114L325.342 47.607L320.435 65.918L305.786 65.918L310.693 47.607Z" />
+      </g>
+    </svg>
+  </div>
+
+  <!-- Sign-in section (hidden initially) -->
+  <div id="signInSection"></div>
+</div>
+
+<script>
+  const svgContainer = document.getElementById('nameSVG');
+  const signInSection = document.getElementById('signInSection');
+
+  // Show SVG after 2 seconds
+  setTimeout(() => {
+    svgContainer.style.opacity = '1';
+  }, 2000);
+
+  // After 4 seconds, hide video & SVG, show sign-in form
+  setTimeout(() => {
+    // Hide video and SVG
+    document.getElementById('introVideo').style.display = 'none';
+    svgContainer.style.opacity = '1';
+
+    // Show sign-in form
+    showSignInForm();
+  }, 4000);
+
+  function showSignInForm() {
+    // create sign-in form element
+    const signInHTML = `
+    <div class="signInCard" style="
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+      max-width: 400px;
+      width: 100%;
+      padding: 40px 30px;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    ">
+      <h2 style="margin:0 0 10px 0; font-size:24px; font-weight:600;">Sign in</h2>
+      <p class="description" style="font-size:14px; color:#555; margin-bottom:20px;">Use your account to access apps, files, settings, and services.</p>
+      <form id="signInForm" aria-label="Sign in form">
+        <label for="identifier" style="position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0;">Email, phone, or username</label>
+        <input type="text" id="identifier" name="identifier" placeholder="Email, phone, or username" aria-required="true" />
+
+        <label for="password" style="position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0;">Password</label>
+        <input type="password" id="password" name="password" placeholder="Password" aria-required="true" />
+
+        <div class="checkbox-group" style="display:flex; align-items:center; margin-bottom:20px;">
+          <input type="checkbox" id="keepSignedIn" />
+          <label for="keepSignedIn" style="font-size:13px;">Keep me signed in</label>
+        </div>
+
+        <button type="submit" style="
+          padding:14px; background:#0078d4; color:#fff; border:none; border-radius:8px; font-size:16px; cursor:pointer; transition:background 0.2s;
+        ">Sign In</button>
+      </form>
+      <div class="links" style="display:flex; justify-content:space-between; margin-top:15px; font-size:13px;">
+        <a href="#" style="color:#0078d4; text-decoration:none;">Forgot password?</a>
+        <a href="#" style="color:#0078d4; text-decoration:none;">Create account</a>
+      </div>
+      <div class="divider" style="display:flex; align-items:center; margin:20px 0; font-size:13px; color:#999;">
+        <div style="flex:1; height:1px; background:#ccc;"></div>
+        <span style="padding:0 10px; background:#fff;">or sign in with</span>
+        <div style="flex:1; height:1px; background:#ccc;"></div>
+      </div>
+      <div class="alt-signin" style="display:flex; flex-direction:column;">
+        <button style="padding:12px; background:#4285F4; color:#fff; border:none; border-radius:8px; font-size:14px; cursor:pointer; margin-bottom:10px;">Sign in with Google</button>
+        <button style="padding:12px; background:#2F2F2F; color:#fff; border:none; border-radius:8px; font-size:14px; cursor:pointer;">Sign in with Microsoft</button>
+      </div>
+    </div>`;
+    // Insert into signInSection
+    signInSection.innerHTML = signInHTML;
+    signInSection.style.display = 'flex';
+
+    // Optional: handle form submit
+    document.getElementById('signInForm').addEventListener('submit', e => {
+      e.preventDefault();
+      alert('Sign-in submitted!');
+    });
+  }
+</script>
+</body>
+</html>
